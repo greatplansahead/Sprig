@@ -20,6 +20,8 @@ const fragile = "g"
 const broken = "j"
 const enter = "l"
 const outside = "m"
+const changeLevel = "n"
+const nature = "r"
 
 setLegend(
   [player, bitmap`
@@ -327,7 +329,24 @@ HHHHHHHHHHHHHHHH`],
 ..555555555555..
 ...5555555555...
 ....55555555....
-................`]
+................`],
+  [nature, bitmap`
+44D44433344D44DD
+4444D4363DD4444D
+D44444333447774D
+D44DD44D44476744
+D488844DDD477744
+D4868444DD4D444D
+448884D44DD44D4D
+44DD44D444D444DD
+444DD4433344D44D
+4D4444D3634DDD44
+4D4444D333D4HHH4
+4DDHHH44D44DH6HD
+DDDH6HDDD444HHHD
+D44HHH4DDD44444D
+DD444444444444DD
+DDDD44444DDD4DDD`]
 )
 
 setBackground(spriteKey);
@@ -335,6 +354,13 @@ setSolids([player, player2, water, wall]);
 
 let level = 0
 const levels = [
+  map`
+rrrrrrrrrrr
+rrrrrrrrrrr
+poooooooood
+rrrrrrrrrrr
+rrrrrrrrrrr
+rrrrrrrrrrr`,
   map`
 pq.c
 .q.q
@@ -382,7 +408,7 @@ q..qq..q
 aq..qq..
 ..q..qq.
 q..q..q.
-.q....qf`,  
+.q....qf`,
   map`
 pq.....q..
 .q.....q..
@@ -432,7 +458,7 @@ const traptune = tune`
 187.5: C5~187.5,
 187.5: C5~187.5,
 187.5: C5~187.5,
-4687.5`
+4687.5`;
 
 
 onInput("s", () => {
@@ -469,142 +495,180 @@ onInput("j", () => {
   getFirst(player2).x -= 1
 })
 
-  let previousX = getFirst(player).x
-  let previousY = getFirst(player).y
+let previousX = getFirst(player).x
+let previousY = getFirst(player).y
 
-  const XYoutside = getFirst(outside)
-  const XYenter = getFirst(enter)
-  const XYplayer = getFirst(player)
+const XYoutside = getFirst(outside)
+const XYenter = getFirst(enter)
+const XYplayer = getFirst(player)
 
 
 
 afterInput(() => {
 
-  const numberOfGoalsCoveredCup = tilesWith(player, cup);
-  const numberOfGoalsCoveredBoba = tilesWith(player, boba);
-  const numberOfGoalsCoveredSugar = tilesWith(player, sugar);
-  const numberOfGoalsCoveredStraw = tilesWith(player, straw).concat(tilesWith(player2, straw));
-  const numberOfGoalsCoveredIce = tilesWith(player, ice);
-  const numberOfGoalsCoveredTea = tilesWith(player, tea);
-  const movekey = tilesWith(player, mop);
-  const trapandplayer = tilesWith(player, fire);
-  const brokenCovered = tilesWith(player, broken);
-  const enterCovered = tilesWith(player, enter);
-  const outsideCovered = tilesWith(player, outside);
-  
-  if (numberOfGoalsCoveredCup.length >= 1) {
-    level = level + 1;
-
-    if (level < levels.length) {
-      setMap(levels[level]);
-    } else {
-      addText("You've just made\na cup of bubble\ntea!", {
-        x: 3,
-        y: 4,
-        color: color`2`
-      })
-    }
-  }
-  
-  if (numberOfGoalsCoveredBoba.length >= 1) {
-   level = level + 1;
-    if (level < levels.length) {
-      setMap(levels[level]);
-    } else {
-      addText("You've just made\na cup of bubble\ntea!", {
-        x: 3,
-        y: 4,
-        color: color`2`
-      })
-    }
-  }
-  
-  if (numberOfGoalsCoveredSugar.length >= 1) {
-    level = level + 1;
-    
-    if (level < levels.length >= 1){
-     setMap(levels[level]);
-   } else { addText("You've just made\na cup of bubble\ntea!", {
-        x: 3,
-        y: 4,
-        color: color`2`
-      })
-  }
-    
-  if (numberOfGoalsCoveredIce.length >= 1) {
-    level = level + 1;
-
-    if (level < levels.length) {
-      setMap(levels[level]);
-    } else { addText("You've just made\na cup of bubble\ntea!", {
-        x: 3,
-        y: 4,
-        color: color`2`
-      })
-    }
-  }
-
-    if (numberOfGoalsCoveredStraw.length >= 2) {
-    level = level + 1;
-
-    if (level < levels.length) {
-      setMap(levels[level]);
-    } else { addText("You've just made\na cup of bubble\ntea!", {
-        x: 3,
-        y: 4,
-        color: color`2`
-      })
-    }
-  }
-
-    if (numberOfGoalsCoveredTea.length >= 1) {
-    level = level + 1;
-
-    if (level < levels.length) {
-      setMap(levels[level]);
-    } else { addText("You've just made\na cup of bubble\ntea!", {
-        x: 3,
-        y: 4,
-        color: color`2`
-      })
-    }
-  }
-
-  if (movekey.length >= 1) {
-    getFirst(mop).remove()
-    getFirst(water).remove()
-  }
-
-  if (trapandplayer.length > 0){
-    setMap(levels[level])
-   }
-
-  /* fragile tiles */
-  
- const sprite = getTile(previousX, previousY)[0];
-  if (sprite && sprite.type === fragile){
-    sprite.type = broken;
-  }
-
-  if (brokenCovered.length >= 1){
-    setMap(levels[0]),
-      playTune(traptune);
-  }
-
-  previousX = getFirst(player).x
-  previousY = getFirst(player).y
+      const numberOfGoalsCoveredCup = tilesWith(player, cup);
+      const numberOfGoalsCoveredBoba = tilesWith(player, boba);
+      const numberOfGoalsCoveredSugar = tilesWith(player, sugar);
+      const numberOfGoalsCoveredStraw = tilesWith(player, straw).concat(tilesWith(player2, straw));
+      const numberOfGoalsCoveredIce = tilesWith(player, ice);
+      const numberOfGoalsCoveredTea = tilesWith(player, tea);
+      const movekey = tilesWith(player, mop);
+      const trapandplayer = tilesWith(player, fire);
+      const brokenCovered = tilesWith(player, broken);
+      const enterCovered = tilesWith(player, enter);
+      const outsideCovered = tilesWith(player, outside);
+      const doorCovered = tilesWith(player, door);
 
 
-/* portal */
-  if(enterCovered.length >= 1){
-    XYplayer.y = XYoutside.y;
-    XYplayer.x = XYoutside.x;
-  }
+      if (numberOfGoalsCoveredCup.length >= 1) {
+        level = level + 1;
 
-  if(outsideCovered.length >= 1){
-    XYplayer.y = XYenter.y;
-    XYplayer.x = XYenter.x;
-  }
+        if (level < levels.length) {
+          setMap(levels[level]);
+        } else {
+          addText("You've just made\na cup of bubble\ntea!", {
+            x: 3,
+            y: 4,
+            color: color`2`
+          })
+        }
+      }
+
+      if (numberOfGoalsCoveredBoba.length >= 1) {
+        level = level + 1;
+        if (level < levels.length) {
+          setMap(levels[level]);
+        } else {
+          addText("You've just made\na cup of bubble\ntea!", {
+            x: 3,
+            y: 4,
+            color: color`2`
+          })
+        }
+      }
+
+      if (numberOfGoalsCoveredSugar.length >= 1) {
+        level = level + 1;
+
+        if (level < levels.length >= 1) {
+          setMap(levels[level]);
+        } else {
+          addText("You've just made\na cup of bubble\ntea!", {
+            x: 3,
+            y: 4,
+            color: color`2`
+          })
+        }
+      }
+
+        if (numberOfGoalsCoveredIce.length >= 1) {
+          level = level + 1;
+
+          if (level < levels.length) {
+            setMap(levels[level]);
+          } else {
+            addText("You've just made\na cup of bubble\ntea!", {
+              x: 3,
+              y: 4,
+              color: color`2`
+            })
+          }
+        }
+
+        if (numberOfGoalsCoveredStraw.length >= 2) {
+          level = level + 1;
+
+          if (level < levels.length) {
+            setMap(levels[level]);
+          } else {
+            addText("You've just made\na cup of bubble\ntea!", {
+              x: 3,
+              y: 4,
+              color: color`2`
+            })
+          }
+        }
+
+        if (numberOfGoalsCoveredTea.length >= 1) {
+          level = level + 1;
+
+          if (level < levels.length) {
+            setMap(levels[level]);
+          } else {
+            addText("You've just made\na cup of bubble\ntea!", {
+              x: 3,
+              y: 4,
+              color: color`2`
+            })
+          }
+        }
+
+   if (doorCovered.length >= 1) {
+        level = level + 1;
+     clearText();
+
+        if (level < levels.length) {
+          setMap(levels[level]);
+        } else {
+          addText("You've just made\na cup of bubble\ntea!", {
+            x: 3,
+            y: 4,
+            color: color`2`
+          })
+        }
+      }
+
+
+  /*story narration*/
 
   
-    })
+    if (level === 0){
+    addText("Welcome to\nthe Cat Cafe!",{
+      x: 3,
+      y: 4,
+      color: color`0`,
+    });
+    onInput("d", () => {
+clearText();
+   })
+    }
+  
+
+        if (movekey.length >= 1) {
+          getFirst(mop).remove()
+          getFirst(water).remove()
+        }
+
+        if (trapandplayer.length > 0) {
+          setMap(levels[level])
+        }
+
+        /* fragile tiles */
+
+        const sprite = getTile(previousX, previousY)[0];
+        if (sprite && sprite.type === fragile) {
+          sprite.type = broken;
+        }
+
+        if (brokenCovered.length >= 1) {
+          setMap(levels[0]),
+            playTune(traptune);
+        }
+
+        previousX = getFirst(player).x
+        previousY = getFirst(player).y
+
+
+        /* portal */
+        if (enterCovered.length >= 1) {
+          XYplayer.y = XYoutside.y;
+          XYplayer.x = XYoutside.x;
+        }
+
+        if (outsideCovered.length >= 1) {
+          XYplayer.y = XYenter.y;
+          XYplayer.x = XYenter.x;
+        }
+
+
+      })
