@@ -18,6 +18,8 @@ const sugar = "e"
 const straw = "a"
 const fragile = "g"
 const broken = "j"
+const enter = "l"
+const outside = "m"
 
 setLegend(
   [player, bitmap`
@@ -291,7 +293,41 @@ H11111111111111H
 HH111111111111HH
 HHH1111111111HHH
 HHHH11111111HHHH
-HHHHHHHHHHHHHHHH`]
+HHHHHHHHHHHHHHHH`],
+  [enter, bitmap`
+................
+....33333333....
+...3333333333...
+..333333333333..
+.33333333333333.
+.33333333333333.
+.33333333333333.
+.33333333333333.
+.33333333333333.
+.33333333333333.
+.33333333333333.
+.33333333333333.
+..333333333333..
+...3333333333...
+....33333333....
+................`],
+  [outside, bitmap`
+................
+....55555555....
+...5555555555...
+..555555555555..
+.55555555555555.
+.55555555555555.
+.55555555555555.
+.55555555555555.
+.55555555555555.
+.55555555555555.
+.55555555555555.
+.55555555555555.
+..555555555555..
+...5555555555...
+....55555555....
+................`]
 )
 
 setBackground(spriteKey);
@@ -300,17 +336,85 @@ setSolids([player, player2, water, wall]);
 let level = 0
 const levels = [
   map`
-pq.goooooo
-oqqoooqoqo
-ooqoqoqoqo
-qoooqoqoqo
-qqqgqq.oqg
-.eqqq.qog.
+pq.c
+.q.q
+.q.q
+.q.q
+...q`,
+  map`
+pq.q.....q.
+.q.qqq.q.q.
+.q.....q.q.
+.q..qqq....
+.q.qb.q.qq.
+.q..q.q..qq
+.q.q..qq..q
+.q.qq.q...q
+...q....qqq`,
+  map`
+qqqqq.......q
+q..h..q..q.q.
+q.qqq.qq.q.q.
+qk...pq..q.q.
+q..hqqq.q....
+qqqk...q.q...
+q.qq.qqq...q.
+...q.q...qqq.
+.qqq.qkqqeq..
+.q....q.q.q..
+...qq.....h..`,
+  map`
+pq.yy.yqq.
+.q.qq.qyy.
+.q..q.....
+.qqqq.qqq.
+......qiq.
+.qqqqqq.h.
+...q...yq.
+qq.y..qqq.
+yq.q.yq...
+...qqqqqqk`,
+  map`
+pq.....q
+.qq..q..
+..qq..qa
+q..qq..q
+aq..qq..
+..q..qq.
+q..q..q.
+.q....qf`,  
+  map`
+pq.....q..
+.q.....q..
+.q.....q.t
+.q.....q..
+.q.....q..
+.q.....g..
+.q.....q..
+.q....mq..
+lq.....q..
+.q.....q..`,
+  map`
+pq.g......
+.qq.....q.
+..q.q.q.q.
+q...q.q.q.
+qqqgqq..qg
+.eqqq.q.g.
 q.....qq..
 q.qq...q..
 ...qq.qq.g
 ......g.g.`,
-  
+  map`
+l.g..kq.q.m
+..qq..q.q..
+...qq.q..h.
+...yggg..qq
+.qqqgpg..qb
+.q.ygggqqq.
+.q.yyyy.qq.
+.qqqqqqqqq.
+...........`,
 ]
 
 setMap(levels[level])
@@ -368,18 +472,25 @@ onInput("j", () => {
   let previousX = getFirst(player).x
   let previousY = getFirst(player).y
 
+  const XYoutside = getFirst(outside)
+  const XYenter = getFirst(enter)
+  const XYplayer = getFirst(player)
+
+
 
 afterInput(() => {
 
   const numberOfGoalsCoveredCup = tilesWith(player, cup);
   const numberOfGoalsCoveredBoba = tilesWith(player, boba);
-  const numberOfGoalsCoveredSugar = tilesWith(player, sugar).concat(tilesWith(player2, sugar));
+  const numberOfGoalsCoveredSugar = tilesWith(player, sugar);
   const numberOfGoalsCoveredStraw = tilesWith(player, straw).concat(tilesWith(player2, straw));
   const numberOfGoalsCoveredIce = tilesWith(player, ice);
   const numberOfGoalsCoveredTea = tilesWith(player, tea);
   const movekey = tilesWith(player, mop);
   const trapandplayer = tilesWith(player, fire);
   const brokenCovered = tilesWith(player, broken);
+  const enterCovered = tilesWith(player, enter);
+  const outsideCovered = tilesWith(player, outside);
   
   if (numberOfGoalsCoveredCup.length >= 1) {
     level = level + 1;
@@ -413,7 +524,11 @@ afterInput(() => {
     
     if (level < levels.length >= 1){
      setMap(levels[level]);
-   } 
+   } else { addText("You've just made\na cup of bubble\ntea!", {
+        x: 3,
+        y: 4,
+        color: color`2`
+      })
   }
     
   if (numberOfGoalsCoveredIce.length >= 1) {
@@ -442,6 +557,19 @@ afterInput(() => {
     }
   }
 
+    if (numberOfGoalsCoveredTea.length >= 1) {
+    level = level + 1;
+
+    if (level < levels.length) {
+      setMap(levels[level]);
+    } else { addText("You've just made\na cup of bubble\ntea!", {
+        x: 3,
+        y: 4,
+        color: color`2`
+      })
+    }
+  }
+
   if (movekey.length >= 1) {
     getFirst(mop).remove()
     getFirst(water).remove()
@@ -451,6 +579,8 @@ afterInput(() => {
     setMap(levels[level])
    }
 
+  /* fragile tiles */
+  
  const sprite = getTile(previousX, previousY)[0];
   if (sprite && sprite.type === fragile){
     sprite.type = broken;
@@ -461,11 +591,20 @@ afterInput(() => {
       playTune(traptune);
   }
 
-  
   previousX = getFirst(player).x
   previousY = getFirst(player).y
 
-  previousX2 = getFirst(player2).x
-  previousY2 = getFirst(player2).y
+
+/* portal */
+  if(enterCovered.length >= 1){
+    XYplayer.y = XYoutside.y;
+    XYplayer.x = XYoutside.x;
+  }
+
+  if(outsideCovered.length >= 1){
+    XYplayer.y = XYenter.y;
+    XYplayer.x = XYenter.x;
+  }
+
   
     })
