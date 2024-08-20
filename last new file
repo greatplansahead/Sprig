@@ -362,6 +362,55 @@ rrrrrrrrrrr
 rrrrrrrrrrr
 rrrrrrrrrrr`,
   map`
+pqqqqqqqqq
+.qqqqqqqqq
+.......qqq
+qqqqqq.qqq
+qqqqqq...q
+qqqqqqqq..
+qqqqqqqqqd`,
+  map`
+qqqqqqqqqq
+qqqqqqqqqq
+p........c
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq`,
+  map`
+qqqqqqqqqq
+qqqqqqqqqq
+p........b
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq`,
+  map`
+qqqqqqqqqq
+qqqqqqqqqq
+p........e
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq`,
+  map`
+qqqqqqqqqq
+qqqqqqqqqq
+p.y.m....i
+lqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq`,
+  map`
+qaq......k
+qhq.qqqqqq
+p.q.qqqaqq
+q.q.qqq.qq
+q........f
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq
+qqqqqqqqqq`,
+  map`...`,
+  map`
 pq.c
 .q.q
 .q.q
@@ -498,9 +547,9 @@ onInput("j", () => {
 let previousX = getFirst(player).x
 let previousY = getFirst(player).y
 
-const XYoutside = getFirst(outside)
-const XYenter = getFirst(enter)
-const XYplayer = getFirst(player)
+let XYoutside = getFirst(outside)
+let XYenter = getFirst(enter)
+let XYplayer = getFirst(player)
 
 
 
@@ -628,17 +677,73 @@ afterInput(() => {
       y: 4,
       color: color`0`,
     });
+      addText("Move to the door",{
+      x: 3,
+      y: 8,
+      color: color`0`,
+    });
     onInput("d", () => {
 clearText();
    })
     }
-  
+
+  if (level === 1){
+    addText("My name is Marv\n and I need help\nfulfilling orders",{
+      x: 3,
+      y: 1,
+      color: color`2`,
+    }); 
+    
+    addText("Help me\ncollect:\n*boba\n*ice\n*sugar\n*tea",{
+      x: 1,
+      y: 8,
+      color: color`2`,
+    });
+
+
+  }
+ 
+  if (level === 2){
+     addText("This is a cup",{
+      x: 3,
+      y: 3,
+      color: color`2`,
+    });
+  }
+
+    if (level === 3){
+     addText("These are pearls",{
+      x: 2,
+      y: 2,
+      color: color`2`,
+    });
+  }
+
+        if (level === 4){
+     addText("This sugar. Some \ncustomers want more\n so be prepared to\n\n\n\n\n collect more bags!",{
+      x:1,
+      y: 2,
+      color: color`2`,
+    });
+  }
+
+            if (level === 5){
+     addText("Be careful of fire!\n   Dodge it by\nentering the portal\n\n\n\n\n\n\n After, collect the\n        ice.",{
+      x: 1,
+      y: 2,
+      color: color`2`,
+    });
+  }
+
+        /* mop and water*/
 
         if (movekey.length >= 1) {
           getFirst(mop).remove()
           getFirst(water).remove()
         }
 
+        /*fire*/
+  
         if (trapandplayer.length > 0) {
           setMap(levels[level])
         }
