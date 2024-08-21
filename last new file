@@ -352,6 +352,7 @@ DDDD44444DDD4DDD`]
 setBackground(spriteKey);
 setSolids([player, player2, water, wall]);
 
+
 let level = 0
 const levels = [
   map`
@@ -397,7 +398,7 @@ qqqqqqqqqq
 p.y.m....i
 lqqqqqqqqq
 qqqqqqqqqq
-qqqqqqqqqq`,
+qqqqqqqqqq`, /* level 5 that includes portal*/
   map`
 qaq......k
 qhq.qqqqqq
@@ -501,6 +502,16 @@ l.g..kq.q.m
 
 setMap(levels[level])
 
+for (let y = 0; y < levels[5].length; y++) {
+  for (let x = 0; x < levels[5][y].length; x++) {
+    if (levels[5][y][x] === 'm') {
+      outside.x = x;
+      outside.y = y;
+      break; 
+    }
+  }
+}
+
 setPushables({
   [player]: [],
   [player2]: []
@@ -554,6 +565,11 @@ onInput("j", () => {
 let previousX = getFirst(player).x
 let previousY = getFirst(player).y
 
+/*   const outx = getFirst(outside).x;
+   const outy = getFirst(outside).y;  */
+   let catx = getFirst(player).x;
+   let caty = getFirst(player).y;
+
 
 afterInput(() => {
 
@@ -569,7 +585,7 @@ afterInput(() => {
   const enterCovered = tilesWith(player, enter);
   const outsideCovered = tilesWith(player, outside);
   const doorCovered = tilesWith(player, door);
-
+  const cat = getFirst(player)
 
   if (numberOfGoalsCoveredCup.length >= 1) {
     level = level + 1;
@@ -768,18 +784,30 @@ afterInput(() => {
 
   /* portals */
 
+ if (cat) {
+    catx = cat.x;
+    caty = cat.y;
+ console.log("Player x:... and Player y:...")
+    // Other logic related to player sprite
+  } else {
+    console.log("Player sprite is undefined or null");
+  }
+
 
 
   if (enterCovered.length >= 1) {
-  const out = getFirst(outside);
-   const cat = getFirst(player);
-    
-    cat.x = out.x;
-    cat.y = out.y;
+ /*      let outx = getFirst(outside).x;
+   let outy = getFirst(outside).y;
+   let catx = getFirst(player).x;
+   let caty = getFirst(player).y;
+    */
+    console.log("cat on enter");
+    catx = outside.x;
+    caty = outside.y;
   }
 
   if (outsideCovered.length >= 1) {
-  const ent = getFirst(enter);
+ /* const ent = getFirst(enter); */
   const cat = getFirst(player);
     
     cat.x = ent.x;
