@@ -507,7 +507,7 @@ for (let y = 0; y < levels[5].length; y++) {
     if (levels[5][y][x] === 'm') {
       outside.x = x;
       outside.y = y;
-      break; 
+      break;
     }
   }
 }
@@ -567,9 +567,17 @@ let previousY = getFirst(player).y
 
 /*   const outx = getFirst(outside).x;
    const outy = getFirst(outside).y;  */
-   let catx = getFirst(player).x;
-   let caty = getFirst(player).y;
+let catx = getFirst(player).x;
+let caty = getFirst(player).y;
 
+let outx;
+let outy;
+
+let entx;
+let enty;
+
+/*console.log(outx)
+console.log(outy)*/
 
 afterInput(() => {
 
@@ -784,34 +792,54 @@ afterInput(() => {
 
   /* portals */
 
- if (cat) {
-    catx = cat.x;
-    caty = cat.y;
- console.log("Player x:... and Player y:...")
+  outx = getFirst(outside).x;
+  outy = getFirst(outside).y;
+
+  entx = getFirst(enter).x;
+  enty = getFirst(enter).y;
+
+  if (outside) {
+    console.log(outx)
+    console.log(outy)
+  }
+
+  if (cat) {
+    console.log("Player x:...and Player y:...")
     // Other logic related to player sprite
+    console.log(cat.x);
+    console.log(cat.y);
   } else {
     console.log("Player sprite is undefined or null");
   }
 
+  if (outside) {
+    console.log(outx);
+    console.log(outy);
+  }
 
+  if (enter) {
+    console.log(entx);
+    console.log(enty);
+  }
 
   if (enterCovered.length >= 1) {
- /*      let outx = getFirst(outside).x;
-   let outy = getFirst(outside).y;
-   let catx = getFirst(player).x;
-   let caty = getFirst(player).y;
-    */
+    /*      let outx = getFirst(outside).x;
+      let outy = getFirst(outside).y;
+      let catx = getFirst(player).x;
+      let caty = getFirst(player).y;
+       */
     console.log("cat on enter");
-    catx = outside.x;
-    caty = outside.y;
+    cat.x = outx;
+    cat.y = outy;
   }
 
   if (outsideCovered.length >= 1) {
- /* const ent = getFirst(enter); */
-  const cat = getFirst(player);
-    
-    cat.x = ent.x;
-    cat.y = ent.y;
+    /* const ent = getFirst(enter); */
+    const cat = getFirst(player);
+
+    cat.x = entx;
+    cat.y = enty;
+    console.log("cat on oustide")
   }
 
 
