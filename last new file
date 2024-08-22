@@ -576,6 +576,7 @@ let outy;
 let entx;
 let enty;
 
+
 /*console.log(outx)
 console.log(outy)*/
 
@@ -593,7 +594,7 @@ afterInput(() => {
   const enterCovered = tilesWith(player, enter);
   const outsideCovered = tilesWith(player, outside);
   const doorCovered = tilesWith(player, door);
-  const cat = getFirst(player)
+  const cat = getFirst(player);
 
   if (numberOfGoalsCoveredCup.length >= 1) {
     level = level + 1;
@@ -792,50 +793,50 @@ afterInput(() => {
 
   /* portals */
 
-  outx = getFirst(outside).x;
-  outy = getFirst(outside).y;
-
-  entx = getFirst(enter).x;
-  enty = getFirst(enter).y;
-
-  if (outside) {
-    console.log(outx)
-    console.log(outy)
-  }
 
   if (cat) {
     console.log("Player x:...and Player y:...")
     // Other logic related to player sprite
     console.log(cat.x);
     console.log(cat.y);
+    player.x = cat.x;
+    player.y = cat.y;
   } else {
     console.log("Player sprite is undefined or null");
   }
 
-  if (outside) {
-    console.log(outx);
-    console.log(outy);
-  }
-
-  if (enter) {
-    console.log(entx);
-    console.log(enty);
-  }
 
   if (enterCovered.length >= 1) {
-    /*      let outx = getFirst(outside).x;
-      let outy = getFirst(outside).y;
-      let catx = getFirst(player).x;
-      let caty = getFirst(player).y;
-       */
+
     console.log("cat on enter");
+    const cat = getFirst(player);
+
+    outx = getFirst(outside).x;
+    outy = getFirst(outside).y;
+
+    player.x = cat.x
+    player.y = cat.y
+
+    if (outside) {
+      console.log(player.x)
+      console.log(player.y)
+    }
+
+
     cat.x = outx;
     cat.y = outy;
+    console.log("cat on enter");
   }
 
   if (outsideCovered.length >= 1) {
-    /* const ent = getFirst(enter); */
     const cat = getFirst(player);
+    entx = getFirst(enter).x;
+    enty = getFirst(enter).y;
+
+    if (enter) {
+      console.log(entx);
+      console.log(enty);
+    }
 
     cat.x = entx;
     cat.y = enty;
