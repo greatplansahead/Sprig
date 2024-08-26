@@ -2,6 +2,7 @@
 
 */
 
+
 let player = "p"
 const player2 = "f"
 const boba = "b"
@@ -442,37 +443,37 @@ pqyq.....q.q
 .q.qq.q...qq
 ...q....qqqq`,
   map`
-pq.q.....q.
+pqkqm....q.
 .q.qqq.q.q.
 .q.....q.q.
 .q..qqq....
-.q.qt.q.qq.
+lq.qt.qhqq.
 .q..q.q..qq
 .q.q..qq..q
 ...qq.....q`,
   map`
 qqqqq.......q
-q..h..q..q.q.
-q.qqq.qq.q.q.
-qk...pq..q.q.
+qgggggq..q.q.
+qkqqqgqq.q.q.
+qg...pq..q.q.
 q..hqqq.q....
-qqqk...q.q...
+qqq....q.q...
 q.qq.qqq...q.
-...q.q...qqq.
-.qqq.qkqqeq..
+...qgq...qqq.
+.qqq.q.qqeq..
 .q....q.q.q..
-...qq.....h..`,
+...qq.....y..`,
   map`
-pq.yy.yqq.
+pq.yymyqq.
 .q.qq.qyy.
 .q..q.....
 .qqqq.qqq.
-......qiq.
+.y....qiq.
 .qqqqqq.h.
 ...q...yq.
-qq.y..qqq.
+qq.g..qqq.
 yq.q.yq...
-...qqqqqqk`,
+.l.qqqqqqk`,
   map`
 pq.....q
 .qq..q..
@@ -494,16 +495,16 @@ pq.....q..
 lq.....q..
 .q.....q..`,
   map`
-pq.g......
+pq.gl.....
 .qq.....q.
 ..q.q.q.q.
 q...q.q.q.
 qqqgqq..qg
-.eqqq.q.g.
-q.....qq..
-q.qq...q..
-...qq.qq.g
-......g.g.`,
+.eqqqmq.g.
+qh..ggqq..
+q.qqg.kq..
+...qqyqq.g
+......y.g.`,
   map`
 l.g..kq.q.m
 ..qq..q.q..
@@ -532,7 +533,7 @@ setPushables({
   [player]: [],
   [player2]: []
 })
-
+/* music*/
 const traptune = tune`
 187.5: D5~187.5,
 187.5: B4~187.5,
@@ -542,6 +543,49 @@ const traptune = tune`
 187.5: C5~187.5,
 187.5: C5~187.5,
 4687.5`;
+const starttune = tune`
+200: G5^200,
+200: D5^200,
+200: G5^200,
+200: D5^200,
+200: G5^200,
+200: E5^200,
+200: G5^200,
+200: A5^200,
+200: B5^200,
+200,
+200: B5^200,
+200: F5^200,
+200: B5^200,
+200: F5^200,
+200: B5^200,
+200: F5^200,
+200: B5^200,
+200: G5^200,
+200: E5^200,
+200: D5^200,
+200: G4^200,
+200,
+200: B4^200,
+200: B4^200,
+200: D5^200,
+200: D5^200,
+200: E5^200,
+200: D5^200,
+200: D5^200,
+200: B4^200,
+200: B4^200,
+200: G4^200`;
+const boom = tune`
+500: F5^500 + E5^500 + D5^500 + C5^500 + B4^500,
+15500`;
+const fragiletune = tune`
+85.71428571428571: C5-85.71428571428571,
+85.71428571428571: D5-85.71428571428571,
+85.71428571428571: G5-85.71428571428571 + E5-85.71428571428571,
+85.71428571428571: C5-85.71428571428571 + E5-85.71428571428571,
+85.71428571428571: A4-85.71428571428571,
+2314.285714285714`;
 
 
 onInput("s", () => {
@@ -592,9 +636,8 @@ let outy;
 let entx;
 let enty;
 
-
-/*console.log(outx)
-console.log(outy)*/
+const playback = playTune(starttune, Infinity);
+let boomPlayed = false;
 
 afterInput(() => {
 
@@ -620,7 +663,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -633,7 +676,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -647,7 +690,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -661,7 +704,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -675,7 +718,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -689,7 +732,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -704,7 +747,7 @@ afterInput(() => {
       addText("You've just made\na cup of bubble\ntea!", {
         x: 3,
         y: 4,
-        color: color`2`
+        color: color`0`
       })
     }
   }
@@ -727,6 +770,7 @@ afterInput(() => {
     onInput("d", () => {
       clearText();
     })
+
   }
 
   if (level === 1) {
@@ -741,7 +785,7 @@ afterInput(() => {
       y: 8,
       color: color`2`,
     });
-
+    
 
   }
 
@@ -798,9 +842,18 @@ afterInput(() => {
       x: 1,
       y: 2,
       color: color`2`,
-    });
+    });  
   }
 
+  if (level === 9 ){
+    playback.end(starttune);
+    if(!boomPlayed && level === 9){
+    playTune(boom);
+      boomPlayed = true;
+    }
+  }
+
+  
   /* mop and water*/
 
   if (movekey.length >= 1) {
@@ -811,7 +864,8 @@ afterInput(() => {
   /*fire*/
 
   if (trapandplayer.length > 0) {
-    setMap(levels[level])
+    setMap(levels[level]);
+    playTune(boom);
   }
 
   /* fragile tiles */
@@ -819,11 +873,13 @@ afterInput(() => {
   const sprite = getTile(previousX, previousY)[0];
   if (sprite && sprite.type === fragile) {
     sprite.type = broken;
+    playTune(fragiletune);
   }
 
   if (brokenCovered.length >= 1) {
     setMap(levels[0]),
        level = 0;/*sets level to 0*/
+    playback.end(starttune);
       playTune(traptune);
   }
 
