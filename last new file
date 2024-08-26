@@ -2,7 +2,7 @@
 
 */
 
-const player = "p"
+let player = "p"
 const player2 = "f"
 const boba = "b"
 const cup = "c"
@@ -373,17 +373,18 @@ qqqqqqqqqd`,
   map`
 qqqqqqqqqq
 qqqqqqqqqq
-p........c
-qqqqqqqqqq
+p.qqq....c
+q.qqq.qqqq
+q.....qqqq
 qqqqqqqqqq
 qqqqqqqqqq`,
   map`
 qqqqqqqqqq
 qqqqqqqqqq
-p........b
-qqqqqqqqqq
-qqqqqqqqqq
-qqqqqqqqqq
+p.qq...qqb
+q.q..q.qq.
+q.q.qq.qq.
+q...qq....
 qqqqqqqqqq`,
   map`
 qqqqqqqqqq
@@ -395,45 +396,60 @@ qqqqqqqqqq`,
   map`
 qqqqqqqqqq
 qqqqqqqqqq
-p.y.m....i
-lqqqqqqqqq
-qqqqqqqqqq
-qqqqqqqqqq`, /* level 5 that includes portal*/
+qqqqqqqq.t
+qqq......q
+q...qqqqqq
+p.qqqqqqqq`,
   map`
-qaq......k
-qhq.qqqqqq
-p.q.qqqaqq
-q.q.qqq.qq
-q........f
 qqqqqqqqqq
 qqqqqqqqqq
+plyym....i
+....yqqqqq
 qqqqqqqqqq
-qqqqqqqqqq
-qqqqqqqqqq`,
+qqqqqqqqqq`, /* level 6 that includes portal*/
+  map`
+qqaq......kq
+qqhq.qqqqqqq
+p..q.qqqaqqq
+qq.q.qqq.qqq
+qq.........f
+qqqqqqqqqqqq
+qqqqqqqqqqqq
+qqqqqqqqqqqq
+qqqqqqqqqqqq
+qqqqqqqqqqqq`,
+  map`
+qqqqqqqq
+qqqqqqqq
+p......d
+qqqqqqqq
+qqqqqqqq
+qqqqqqqq`,
   map`
 pq.c
 .q.q
 .q.q
 .q.q
 ...q`,
-  map`pq.q.....q.
+  map`
+pqyq.....q.q
+.qyqqq.q.q.q
+.q.....q.q.q
+.q..qqq....q
+.q.qb.q.qq.q
+.q..q.q..qqq
+.q.q..qq..qq
+.q.qq.q...qq
+...q....qqqq`,
+  map`
+pq.q.....q.
 .q.qqq.q.q.
 .q.....q.q.
 .q..qqq....
-.q.qb.q.qq.
+.q.qt.q.qq.
 .q..q.q..qq
 .q.q..qq..q
-.q.qq.q...q
-...q....qqq`,
-  map`pq.q.....q.
-  .q.qqq.q.q.
-  .q.....q.q.
-  .q..qqq....
-  .q.qb.q.qq.
-  .q..q.q..qq
-  .q.q..qq..q
-  .q.qq.q...q
-  ...q...`,
+...qq.....q`,
   map`
 qqqqq.......q
 q..h..q..q.q.
@@ -502,9 +518,9 @@ l.g..kq.q.m
 
 setMap(levels[level])
 
-for (let y = 0; y < levels[5].length; y++) {
-  for (let x = 0; x < levels[5][y].length; x++) {
-    if (levels[5][y][x] === 'm') {
+for (let y = 0; y < levels[6].length; y++) {
+  for (let x = 0; x < levels[6][y].length; x++) {
+    if (levels[6][y][x] === 'm') {
       outside.x = x;
       outside.y = y;
       break;
@@ -594,7 +610,6 @@ afterInput(() => {
   const enterCovered = tilesWith(player, enter);
   const outsideCovered = tilesWith(player, outside);
   const doorCovered = tilesWith(player, door);
-  const cat = getFirst(player);
 
   if (numberOfGoalsCoveredCup.length >= 1) {
     level = level + 1;
@@ -731,15 +746,15 @@ afterInput(() => {
   }
 
   if (level === 2) {
-    addText("This is a cup", {
-      x: 3,
-      y: 3,
+    addText(" This is a cup.\n  reusable ofc!", {
+      x: 1,
+      y: 2,
       color: color`2`,
     });
   }
 
   if (level === 3) {
-    addText("These are pearls", {
+    addText("This is boba.\n Marv loves them!", {
       x: 2,
       y: 2,
       color: color`2`,
@@ -754,8 +769,32 @@ afterInput(() => {
     });
   }
 
-  if (level === 5) {
+    if (level === 5) {
+    addText("This is peach tea. \n  Only peach tea is\n     served here", {
+      x: 1,
+      y: 2,
+      color: color`2`,
+    });
+  }
+
+  if (level === 6) {
     addText("Be careful of fire!\n   Dodge it by\nentering the portal\n\n\n\n\n\n\n After, collect the\n        ice.", {
+      x: 1,
+      y: 2,
+      color: color`2`,
+    });
+  }
+
+  if (level === 7){
+    addText("Marv's friend May \nsometimes helps\ncollecting  straws. They\nboth hate water!", {
+    x:1,
+    y: 10,
+      color: color`2`,
+      });
+  }
+
+  if (level === 8) {
+    addText("You've got an\n      order!\n\n\n\n\n\n\n Let's go complete\n      it!", {
       x: 1,
       y: 2,
       color: color`2`,
@@ -784,58 +823,49 @@ afterInput(() => {
 
   if (brokenCovered.length >= 1) {
     setMap(levels[0]),
+       level = 0;/*sets level to 0*/
       playTune(traptune);
   }
 
-  previousX.x = getFirst(player).x
-  previousY.y = getFirst(player).y
+  previousX = getFirst(player).x;
+  previousY = getFirst(player).y;
 
 
   /* portals */
 
 
-  if (cat) {
-    console.log("Player x:...and Player y:...")
-    // Other logic related to player sprite
-    console.log(cat.x);
-    console.log(cat.y);
-    player.x = cat.x;
-    player.y = cat.y;
-  } else {
-    console.log("Player sprite is undefined or null");
-  }
-
-
   if (enterCovered.length >= 1) {
 
-    console.log("cat on enter");
-    const cat = getFirst(player);
-
-    outx = getFirst(outside).x;
-    outy = getFirst(outside).y;
-
-    player.x = cat.x
-    player.y = cat.y
-
-    if (outside) {
-      console.log(player.x)
-      console.log(player.y)
-    }
-
+    let cat = getFirst(player);
+    let outx = getFirst(outside).x;
+    let outy = getFirst(outside).y;
 
     cat.x = outx;
     cat.y = outy;
+
+     player.x = cat.x;
+     player.y = cat.y;
+
+    console.log(outx);
+    console.log(outy);
+    console.log(player.x);
+    console.log(player.y);
+    console.log(getFirst(player).x);
+    console.log(cat.x);
+    console.log(cat.y);
     console.log("cat on enter");
   }
+  
 
-  if (outsideCovered.length >= 1) {
-    const cat = getFirst(player);
+ if (outsideCovered.length >= 1) {
     entx = getFirst(enter).x;
     enty = getFirst(enter).y;
+   let cat = getFirst(player);
 
     if (enter) {
       console.log(entx);
       console.log(enty);
+       
     }
 
     cat.x = entx;
