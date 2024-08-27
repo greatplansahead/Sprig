@@ -2,7 +2,6 @@
 
 */
 
-
 let player = "p"
 const player2 = "f"
 const boba = "b"
@@ -587,6 +586,10 @@ const fragiletune = tune`
 85.71428571428571: A4-85.71428571428571,
 2314.285714285714`;
 
+/*text*/
+
+
+
 
 onInput("s", () => {
   getFirst(player).y += 1
@@ -767,13 +770,10 @@ afterInput(() => {
       y: 8,
       color: color`0`,
     });
-    onInput("d", () => {
-      clearText();
-    })
-
   }
 
   if (level === 1) {
+    clearText();
     addText("My name is Marv\n and I need help\nfulfilling orders", {
       x: 3,
       y: 1,
@@ -790,6 +790,7 @@ afterInput(() => {
   }
 
   if (level === 2) {
+    clearText();
     addText(" This is a cup.\n  reusable ofc!", {
       x: 1,
       y: 2,
@@ -798,6 +799,7 @@ afterInput(() => {
   }
 
   if (level === 3) {
+    clearText();
     addText("This is boba.\n Marv loves them!", {
       x: 2,
       y: 2,
@@ -806,6 +808,7 @@ afterInput(() => {
   }
 
   if (level === 4) {
+    clearText();
     addText("This sugar. Some \ncustomers want more\n so be prepared to\n\n\n\n\n collect more bags!", {
       x: 1,
       y: 2,
@@ -814,6 +817,7 @@ afterInput(() => {
   }
 
     if (level === 5) {
+      clearText();
     addText("This is peach tea. \n  Only peach tea is\n     served here", {
       x: 1,
       y: 2,
@@ -822,6 +826,7 @@ afterInput(() => {
   }
 
   if (level === 6) {
+    clearText();
     addText("Be careful of fire!\n   Dodge it by\nentering the portal\n\n\n\n\n\n\n After, collect the\n        ice.", {
       x: 1,
       y: 2,
@@ -830,14 +835,16 @@ afterInput(() => {
   }
 
   if (level === 7){
-    addText("Marv's friend May \nsometimes helps\ncollecting  straws. They\nboth hate water!", {
-    x:1,
+    clearText();
+   addText("Marv's friend May \nsometimes helps\ncollecting  straws. They\nboth hate water!", {
+    x: 1,
     y: 10,
       color: color`2`,
       });
   }
 
   if (level === 8) {
+      clearText();
     addText("You've got an\n      order!\n\n\n\n\n\n\n Let's go complete\n      it!", {
       x: 1,
       y: 2,
