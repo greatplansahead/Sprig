@@ -419,6 +419,17 @@ qqqqqqqqqqqq
 qqqqqqqqqqqq
 qqqqqqqqqqqq`,
   map`
+qqqqqqqqqqqq
+gggggggggqqq
+gpqqgqqqgydg
+ggqqgggyqqqg
+qggqqqqgqygg
+qqgggggggggq
+qqqqqqqqqqqq
+qqqqqqqqqqqq
+qqqqqqqqqqqq
+qqqqqqqqqqqq`,
+  map`
 qqqqqqqq
 qqqqqqqq
 p......d
@@ -760,6 +771,7 @@ afterInput(() => {
 
 
   if (level === 0) {
+    clearText();
     addText("Welcome to\nthe Cat Cafe!", {
       x: 3,
       y: 4,
@@ -843,7 +855,7 @@ afterInput(() => {
       });
   }
 
-  if (level === 8) {
+  if (level === 9) {
       clearText();
     addText("You've got an\n      order!\n\n\n\n\n\n\n Let's go complete\n      it!", {
       x: 1,
@@ -852,9 +864,19 @@ afterInput(() => {
     });  
   }
 
-  if (level === 9 ){
+   if (level === 8) {
+      clearText();
+    addText("Beware of fragile\n      tiles!", {
+      x: 2,
+      y: 11,
+      color: color`2`,
+    });  
+  }
+
+  
+  if (level === 10 ){
     playback.end(starttune);
-    if(!boomPlayed && level === 9){
+    if(!boomPlayed && level === 10){
     playTune(boom);
       boomPlayed = true;
     }
@@ -871,10 +893,18 @@ afterInput(() => {
   /*fire*/
 
   if (trapandplayer.length > 0) {
-    setMap(levels[level]);
     playTune(boom);
-  }
+    playTune(fragiletune);
+    const sprite2 = getAll();
+    sprite2.forEach(sprite2 => {
+      if(sprite2.type === "broken"){
+        sprite2.type = "fragile";
+      }
+          setMap(levels[level]);
+    })
 
+                     }
+  
   /* fragile tiles */
 
   const sprite = getTile(previousX, previousY)[0];
@@ -884,6 +914,7 @@ afterInput(() => {
   }
 
   if (brokenCovered.length >= 1) {
+    clearText();
     setMap(levels[0]),
        level = 0;/*sets level to 0*/
     playback.end(starttune);
