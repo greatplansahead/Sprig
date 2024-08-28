@@ -1,6 +1,24 @@
-/* 
+/*
+@title: Cat Cafe
+@author: Nunu(greatplansahead)
+@tags: [portal, maze, cute, cafe, bubble tea]
+arcade project.
+Controls: 
+player 1
+right:D
+left: A
+up: W
+down: S
 
+Player 2
+right: L
+left: J
+up: I
+down: K
+
+special thanks to Portia for the inspo <3
 */
+
 
 let player = "p"
 const player2 = "f"
@@ -399,8 +417,8 @@ qqqqqqqqqq`,
   map`
 qqqqqqqqqq
 qqqqqqqqqq
-p.qq...qqb
-q.q..q.qq.
+p.q....qqb
+q.q.qq.qq.
 q.q.qq.qq.
 q...qq....
 qqqqqqqqqq`,
@@ -770,7 +788,7 @@ afterInput(() => {
     }
   }
 
-    if (numberOfGoalsCoveredBubbleTea.length >= 1) {
+  if (numberOfGoalsCoveredBubbleTea.length >= 1) {
     level = level + 1;
 
     if (level < levels.length) {
@@ -804,7 +822,7 @@ afterInput(() => {
 
 
   if (level === 0) {
-    
+
     clearText();
     addText("Welcome to\nthe Cat Cafe!", {
       x: 3,
@@ -846,7 +864,7 @@ afterInput(() => {
 
   if (level === 3) {
     clearText();
-    addText("This is boba.\nMarv loves them!", {
+    addText("This is boba.\nMarv loves it!", {
       x: 2,
       y: 2,
       color: color`2`,
@@ -873,8 +891,8 @@ afterInput(() => {
 
   if (level === 6) {
     clearText();
-    addText("Be careful of fire!\n   Dodge it by\nentering the portal\n\n\n\n\n\n\n After, collect the\n        ice.", {
-      x: 1,
+    addText("Be careful of fire!\nDodge it by entering\nthe two-way portal\n\n\n\n\n\n\n After, collect the\n        ice.", {
+      x: 0,
       y: 2,
       color: color`2`,
     });
@@ -929,10 +947,10 @@ afterInput(() => {
   if (trapandplayer.length > 0) {
     playTune(boom);
     setMap(levels[level]);
-   if (sprite && sprite.type === broken) {
-    sprite.type = fragile;
-  }
+    if (sprite && sprite.type === broken) {
+      sprite.type = fragile;
     }
+  }
 
   /* fragile tiles */
 
@@ -947,7 +965,7 @@ afterInput(() => {
       level = 0; /*sets level to 0*/
     playback.end(starttune);
     playTune(traptune);
-    if(level === 0){
+    if (level === 0) {
       playTune(starttune, Inifity);
     }
   }
