@@ -22,6 +22,7 @@ const enter = "l"
 const outside = "m"
 const changeLevel = "n"
 const nature = "r"
+const bubbletea = "s"
 
 setLegend(
   [player, bitmap`
@@ -346,7 +347,24 @@ D4868444DD4D444D
 DDDH6HDDD444HHHD
 D44HHH4DDD44444D
 DD444444444444DD
-DDDD44444DDD4DDD`]
+DDDD44444DDD4DDD`],
+  [bubbletea, bitmap`
+.....3..........
+......2.........
+......32........
+.......3255.....
+.....3553573....
+.....3572443....
+.....3443443....
+.....3442443....
+.....3443443....
+.....3444443....
+.....3400403....
+.....3004043....
+.....3333333....
+................
+................
+................`],
 )
 
 setBackground(spriteKey);
@@ -403,8 +421,8 @@ p.qqqqqqqq`,
   map`
 qqqqqqqqqq
 qqqqqqqqqq
-plyym....i
-....yqqqqq
+pyyym....i
+.lyyyqqqqq
 qqqqqqqqqq
 qqqqqqqqqq`, /* level 6 that includes portal*/
   map`
@@ -465,14 +483,14 @@ lq.qt.qhqq.
 qqqqq.......q
 qgggggq..q.q.
 qkqqqgqq.q.q.
-qg...pq..q.q.
-q..hqqq.q....
+qggggpq..q.q.
+q..yqqq.q....
 qqq....q.q...
 q.qq.qqq...q.
 ...qgq...qqq.
 .qqq.q.qqeq..
 .q....q.q.q..
-...qq.....y..`,
+...qq.....h..`,
   map`
 pq.yymyqq.
 .q.qq.qyy.
@@ -481,9 +499,9 @@ pq.yymyqq.
 .y....qiq.
 .qqqqqq.h.
 ...q...yq.
-qq.g..qqq.
+qqlg..qqq.
 yq.q.yq...
-.l.qqqqqqk`,
+...qqqqqqk`,
   map`
 pq.....q
 .qq..q..
@@ -520,7 +538,7 @@ l.g..kq.q.m
 ..qq..q.q..
 ...qq.q..h.
 ...yggg..qq
-.qqqgpg..qb
+.qqqgpg..qs
 .q.ygggqqq.
 .q.yyyy.qq.
 .qqqqqqqqq.
@@ -661,6 +679,7 @@ afterInput(() => {
   const numberOfGoalsCoveredStraw = tilesWith(player, straw).concat(tilesWith(player2, straw));
   const numberOfGoalsCoveredIce = tilesWith(player, ice);
   const numberOfGoalsCoveredTea = tilesWith(player, tea);
+  const numberOfGoalsCoveredBubbleTea = tilesWith(player, bubbletea);
   const movekey = tilesWith(player, mop);
   const trapandplayer = tilesWith(player, fire);
   const brokenCovered = tilesWith(player, broken);
@@ -751,6 +770,20 @@ afterInput(() => {
     }
   }
 
+    if (numberOfGoalsCoveredBubbleTea.length >= 1) {
+    level = level + 1;
+
+    if (level < levels.length) {
+      setMap(levels[level]);
+    } else {
+      addText("You've just made\na cup of bubble\ntea!", {
+        x: 3,
+        y: 4,
+        color: color`7`
+      })
+    }
+  }
+
   if (doorCovered.length >= 1) {
     level = level + 1;
     clearText();
@@ -771,16 +804,17 @@ afterInput(() => {
 
 
   if (level === 0) {
+    
     clearText();
     addText("Welcome to\nthe Cat Cafe!", {
       x: 3,
       y: 4,
-      color: color`0`,
+      color: color`2`,
     });
     addText("Move to the door", {
       x: 3,
       y: 8,
-      color: color`0`,
+      color: color`2`,
     });
   }
 
@@ -797,13 +831,13 @@ afterInput(() => {
       y: 8,
       color: color`2`,
     });
-    
+
 
   }
 
   if (level === 2) {
     clearText();
-    addText(" This is a cup.\n  reusable ofc!", {
+    addText(" This is a cup.\n\n\n\n\n\n\n\n\n\n  reusable ofc!", {
       x: 1,
       y: 2,
       color: color`2`,
@@ -812,7 +846,7 @@ afterInput(() => {
 
   if (level === 3) {
     clearText();
-    addText("This is boba.\n Marv loves them!", {
+    addText("This is boba.\nMarv loves them!", {
       x: 2,
       y: 2,
       color: color`2`,
@@ -821,18 +855,18 @@ afterInput(() => {
 
   if (level === 4) {
     clearText();
-    addText("This sugar. Some \ncustomers want more\n so be prepared to\n\n\n\n\n collect more bags!", {
+    addText("This sugar. Some \ncustomers want more\n so be prepared to\n\n\n\n\n\n collect more bags!", {
       x: 1,
       y: 2,
       color: color`2`,
     });
   }
 
-    if (level === 5) {
-      clearText();
-    addText("This is peach tea. \n  Only peach tea is\n     served here", {
+  if (level === 5) {
+    clearText();
+    addText("This is fruit tea. \nBut Marv's favorite\ntea is peach tea.", {
       x: 1,
-      y: 2,
+      y: 3,
       color: color`2`,
     });
   }
@@ -846,43 +880,43 @@ afterInput(() => {
     });
   }
 
-  if (level === 7){
+  if (level === 7) {
     clearText();
-   addText("Marv's friend May \nsometimes helps\ncollecting  straws. They\nboth hate water!", {
-    x: 1,
-    y: 10,
+    addText("Marv's friend May \nsometimes helps\ncollecting  straws. They\nboth hate water!\n but Marv is brave\n(hint hint)", {
+      x: 1,
+      y: 9,
       color: color`2`,
-      });
+    });
   }
 
   if (level === 9) {
-      clearText();
-    addText("You've got an\n      order!\n\n\n\n\n\n\n Let's go complete\n      it!", {
+    clearText();
+    addText("You've got an order\n\n\n\n\n\n\n Let's go complete\n        it!", {
       x: 1,
       y: 2,
       color: color`2`,
-    });  
+    });
   }
 
-   if (level === 8) {
-      clearText();
+  if (level === 8) {
+    clearText();
     addText("Beware of fragile\n      tiles!", {
       x: 2,
       y: 11,
       color: color`2`,
-    });  
+    });
   }
 
-  
-  if (level === 10 ){
+
+  if (level === 10) {
     playback.end(starttune);
-    if(!boomPlayed && level === 10){
-    playTune(boom);
+    if (!boomPlayed && level === 10) {
+      playTune(boom);
       boomPlayed = true;
     }
   }
 
-  
+
   /* mop and water*/
 
   if (movekey.length >= 1) {
@@ -891,23 +925,17 @@ afterInput(() => {
   }
 
   /*fire*/
-
+  const sprite = getTile(previousX, previousY)[0];
   if (trapandplayer.length > 0) {
     playTune(boom);
-    playTune(fragiletune);
-    const sprite2 = getAll();
-    sprite2.forEach(sprite2 => {
-      if(sprite2.type === "broken"){
-        sprite2.type = "fragile";
-      }
-          setMap(levels[level]);
-    })
+    setMap(levels[level]);
+   if (sprite && sprite.type === broken) {
+    sprite.type = fragile;
+  }
+    }
 
-                     }
-  
   /* fragile tiles */
 
-  const sprite = getTile(previousX, previousY)[0];
   if (sprite && sprite.type === fragile) {
     sprite.type = broken;
     playTune(fragiletune);
@@ -916,9 +944,12 @@ afterInput(() => {
   if (brokenCovered.length >= 1) {
     clearText();
     setMap(levels[0]),
-       level = 0;/*sets level to 0*/
+      level = 0; /*sets level to 0*/
     playback.end(starttune);
-      playTune(traptune);
+    playTune(traptune);
+    if(level === 0){
+      playTune(starttune, Inifity);
+    }
   }
 
   previousX = getFirst(player).x;
@@ -937,8 +968,8 @@ afterInput(() => {
     cat.x = outx;
     cat.y = outy;
 
-     player.x = cat.x;
-     player.y = cat.y;
+    player.x = cat.x;
+    player.y = cat.y;
 
     console.log(outx);
     console.log(outy);
@@ -949,17 +980,17 @@ afterInput(() => {
     console.log(cat.y);
     console.log("cat on enter");
   }
-  
 
- if (outsideCovered.length >= 1) {
+
+  if (outsideCovered.length >= 1) {
     entx = getFirst(enter).x;
     enty = getFirst(enter).y;
-   let cat = getFirst(player);
+    let cat = getFirst(player);
 
     if (enter) {
       console.log(entx);
       console.log(enty);
-       
+
     }
 
     cat.x = entx;
